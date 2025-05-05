@@ -4,11 +4,31 @@ from countries.api.serializers import CountrySerializer
 from rest_framework.response import Response
 
 class CountryListCreateAPIView(generics.ListCreateAPIView):
+    """
+    get:
+    Return a list of all countries.
+
+    post:
+    Create a new country.
+    """
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
 
 
 class CountryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    get:
+    Return a single country.
+
+    put:
+    update a country.
+
+    patch:
+    partially update a country
+
+    delete: 
+    delete a country
+    """
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
 
