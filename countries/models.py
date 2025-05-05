@@ -7,6 +7,15 @@ class Language(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+class Currency(models.Model):
+    code = models.CharField(max_length=3, unique=True)  # e.g., 'BWP'
+    name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.code})"
 
 
 class Country(models.Model):
