@@ -4,7 +4,10 @@ from django.core.management.base import BaseCommand
 from countries.models import Country, Currency, Language, RegionalBloc
 
 class Command(BaseCommand):
-    help = 'Fetches country data from restcountries.com and populates the database.'
+    """
+    Fetch and store country data from restcountries API 
+    """
+    help = 'Fetches country data from restcountries API and populates the database.'
 
     def handle(self, *args, **options):
         url = "https://restcountries.com/v3.1/all"
