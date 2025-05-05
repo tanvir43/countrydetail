@@ -8,7 +8,7 @@ class Language(models.Model):
     def __str__(self):
         return self.name
     
-    
+
 class Currency(models.Model):
     code = models.CharField(max_length=3, unique=True)  # e.g., 'BWP'
     name = models.CharField(max_length=100)
@@ -16,6 +16,14 @@ class Currency(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.code})"
+    
+
+class RegionalBloc(models.Model):
+    acronym = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Country(models.Model):
