@@ -39,7 +39,7 @@ pip install -r requirements.txt
 If `requirements.txt` doesn’t exist yet, here are the essentials:
 
 ```bash
-pip install django djangorestframework djangorestframework-simplejwt requests
+pip install django djangorestframework djangorestframework-simplejwt requests drf-yasg
 ```
 
 ---
@@ -51,3 +51,23 @@ pip install django djangorestframework djangorestframework-simplejwt requests
 ```bash
 python manage.py migrate
 ```
+
+### 2. Create SuperUser
+
+```bash
+python manage.py createsuperuser
+```
+
+## Fetch and Store data from [REST Countries API](https://restcountries.com/v3.1/all)
+
+```bash
+python manage.py fetch_countries
+```
+
+## API doc
+```bash
+python manage.py runserver
+```
+[Swagger](http://http://localhost:8000/swagger/)
+[redoc](http://localhost:8000/redoc/)
+
