@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Country, Language, Currency, RegionalBloc
+from ..models import Country, Language, Currency
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,15 +11,10 @@ class CurrencySerializer(serializers.ModelSerializer):
         model = Currency
         fields = ['id', 'code', 'name', 'symbol']
 
-class RegionalBlocSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RegionalBloc
-        fields = ['id', 'acronym', 'name']
 
 class CountrySerializer(serializers.ModelSerializer):
     languages = LanguageSerializer(many=True, read_only=True)
     currencies = CurrencySerializer(many=True, read_only=True)
-    regional_blocs = RegionalBlocSerializer(many=True, read_only=True)
     borders = serializers.SlugRelatedField(slug_field='cca3', many=True, read_only=True)
 
     class Meta:
