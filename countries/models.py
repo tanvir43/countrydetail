@@ -1,6 +1,14 @@
 from django.db import models
 
 
+class Language(models.Model):
+    code = models.CharField(max_length=10, unique=True)  # e.g., 'eng'
+    name = models.CharField(max_length=100)              # e.g., 'English'
+
+    def __str__(self):
+        return self.name
+
+
 class Country(models.Model):
     # Model Schema for Country Information
     name = models.CharField(max_length=100)
