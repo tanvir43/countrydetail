@@ -68,6 +68,6 @@ python manage.py fetch_countries
 ```bash
 python manage.py runserver
 ```
-[Swagger](http://http://localhost:8000/swagger/)
+[Swagger](http://localhost:8000/swagger/)
 [redoc](http://localhost:8000/redoc/)
 
