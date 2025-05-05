@@ -14,16 +14,11 @@ class Currency(models.Model):
     name = models.CharField(max_length=100)
     symbol = models.CharField(max_length=10, blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Currencies"
+
     def __str__(self):
         return f"{self.name} ({self.code})"
-    
-
-class RegionalBloc(models.Model):
-    acronym = models.CharField(max_length=10, unique=True)
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
 
 
 class Country(models.Model):
@@ -72,8 +67,12 @@ class Country(models.Model):
     # Relations
     languages = models.ManyToManyField(Language, blank=True)
     currencies = models.ManyToManyField(Currency, blank=True)
-    regional_blocs = models.ManyToManyField(RegionalBloc, blank=True)
     borders = models.ManyToManyField('self', symmetrical=False, blank=True)
+    
+    class Meta:
+        verbose_name_plural = "Countries"
 
     def __str__(self):
         return self.name
+    
+    
