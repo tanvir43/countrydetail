@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Language(models.Model):
+    """
+    Model Schema for Language
+    """
     code = models.CharField(max_length=10, unique=True)  # e.g., 'eng'
     name = models.CharField(max_length=100)              # e.g., 'English'
 
@@ -10,6 +13,9 @@ class Language(models.Model):
     
 
 class Currency(models.Model):
+    """
+    Model Schema for Currency
+    """
     code = models.CharField(max_length=3, unique=True)  # e.g., 'BWP'
     name = models.CharField(max_length=100)
     symbol = models.CharField(max_length=10, blank=True, null=True)
@@ -22,7 +28,9 @@ class Currency(models.Model):
 
 
 class Country(models.Model):
-    # Model Schema for Country Information
+    """
+    Model Schema for Country Information
+    """
     name = models.CharField(max_length=100)
     official_name = models.CharField(max_length=200, blank=True, null=True)
 
