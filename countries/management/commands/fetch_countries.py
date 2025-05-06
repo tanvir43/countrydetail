@@ -56,41 +56,80 @@ class Command(BaseCommand):
             gini = item.get("gini")
             postal_code = item.get("postalCode")
 
-            country_obj, created = Country.objects.update_or_create(
+            # country_obj, created = Country.objects.update_or_create(
+            #     cca3=cca3,
+            #     defaults={
+            #         "name": common_name,
+            #         "official_name": official_name,
+            #         "cca2": cca2,
+            #         "ccn3": ccn3,
+            #         "cioc": cioc,
+            #         "fifa": fifa,
+            #         "capital": capital,
+            #         "region": region,
+            #         "subregion": subregion,
+            #         "continent": continent,
+            #         "area": item.get("area"),
+            #         "population": item.get("population"),
+            #         "independent": item.get("independent", True),
+            #         "un_member": item.get("unMember", False),
+            #         "status": item.get("status"),
+            #         "start_of_week": item.get("startOfWeek"),
+            #         "landlocked": item.get("landlocked", False),
+            #         "latlng": latlng,
+            #         "capital_latlng": capital_latlng,
+            #         "alt_spellings": item.get("altSpellings"),
+            #         "tld": item.get("tld"),
+            #         "timezones": item.get("timezones"),
+            #         "car_signs": car_signs,
+            #         "car_side": car_side,
+            #         "flag_emoji": flag_emoji,
+            #         "flag_url": flag_url,
+            #         "flag_svg": flag_svg,
+            #         "coat_of_arms_png": coat_png,
+            #         "coat_of_arms_svg": coat_svg,
+            #         "gini": gini,
+            #         "postal_code": postal_code,
+            #     }
+            # )
+
+            if Country.objects.filter(cca3=cca3).exists():
+                self.stdout.write(self.style.WARNING(f"Skipped (already exists): {common_name}"))
+                continue
+
+            country_obj = Country.objects.create(
+                name=common_name,
+                official_name=official_name,
+                cca2=cca2,
                 cca3=cca3,
-                defaults={
-                    "name": common_name,
-                    "official_name": official_name,
-                    "cca2": cca2,
-                    "ccn3": ccn3,
-                    "cioc": cioc,
-                    "fifa": fifa,
-                    "capital": capital,
-                    "region": region,
-                    "subregion": subregion,
-                    "continent": continent,
-                    "area": item.get("area"),
-                    "population": item.get("population"),
-                    "independent": item.get("independent", True),
-                    "un_member": item.get("unMember", False),
-                    "status": item.get("status"),
-                    "start_of_week": item.get("startOfWeek"),
-                    "landlocked": item.get("landlocked", False),
-                    "latlng": latlng,
-                    "capital_latlng": capital_latlng,
-                    "alt_spellings": item.get("altSpellings"),
-                    "tld": item.get("tld"),
-                    "timezones": item.get("timezones"),
-                    "car_signs": car_signs,
-                    "car_side": car_side,
-                    "flag_emoji": flag_emoji,
-                    "flag_url": flag_url,
-                    "flag_svg": flag_svg,
-                    "coat_of_arms_png": coat_png,
-                    "coat_of_arms_svg": coat_svg,
-                    "gini": gini,
-                    "postal_code": postal_code,
-                }
+                ccn3=ccn3,
+                cioc=cioc,
+                fifa=fifa,
+                capital=capital,
+                region=region,
+                subregion=subregion,
+                continent=continent,
+                area=item.get("area"),
+                population=item.get("population"),
+                independent=item.get("independent", True),
+                un_member=item.get("unMember", False),
+                status=item.get("status"),
+                start_of_week=item.get("startOfWeek"),
+                landlocked=item.get("landlocked", False),
+                latlng=latlng,
+                capital_latlng=capital_latlng,
+                alt_spellings=item.get("altSpellings"),
+                tld=item.get("tld"),
+                timezones=item.get("timezones"),
+                car_signs=car_signs,
+                car_side=car_side,
+                flag_emoji=flag_emoji,
+                flag_url=flag_url,
+                flag_svg=flag_svg,
+                coat_of_arms_png=coat_png,
+                coat_of_arms_svg=coat_svg,
+                gini=gini,
+                postal_code=postal_code,
             )
 
             # Handle Languages
@@ -120,88 +159,4 @@ class Command(BaseCommand):
                 except Country.DoesNotExist:
                     continue
 
-            self.stdout.write(self.style.SUCCESS(f"{'Created' if created else 'Updated'}: {common_name}"))
-
-
-
-
-# import requests
-# from django.core.management.base import BaseCommand
-# from countries.models import Country, Currency, Language
-
-# class Command(BaseCommand):
-#     """
-#     Fetch and store country data from restcountries API 
-#     """
-#     help = 'Fetches country data from restcountries API and saves it to the database'
-
-#     def handle(self, *args, **options):
-#         url = "https://restcountries.com/v3.1/all"
-#         response = requests.get(url)
-#         data = response.json()
-
-#         for item in data:
-#             name_data = item.get("name", {})
-#             native_names = name_data.get("nativeName", {})
-
-#             country, created = Country.objects.update_or_create(
-#                 cca3=item.get("cca3"),
-#                 defaults={
-#                     "name": name_data.get("common", ""),
-#                     "official_name": name_data.get("official", ""),
-#                     "native_names": native_names,
-#                     "cca2": item.get("cca2"),
-#                     "ccn3": item.get("ccn3"),
-#                     "cioc": item.get("cioc"),
-#                     "fifa": item.get("fifa"),
-#                     "independent": item.get("independent"),
-#                     "status": item.get("status"),
-#                     "un_member": item.get("unMember"),
-#                     "region": item.get("region"),
-#                     "subregion": item.get("subregion"),
-#                     "capital": item.get("capital", [""])[0] if item.get("capital") else "",
-#                     "alt_spellings": item.get("altSpellings", []),
-#                     "tld": item.get("tld", []),
-#                     "latlng": item.get("latlng", []),
-#                     "landlocked": item.get("landlocked", False),
-#                     "borders": item.get("borders", []),
-#                     "area": item.get("area"),
-#                     "population": item.get("population"),
-#                     "flag_emoji": item.get("flag", ""),
-#                     "flag_url_png": item.get("flags", {}).get("png", ""),
-#                     "flag_url_svg": item.get("flags", {}).get("svg", ""),
-#                     "coat_of_arms_png": item.get("coatOfArms", {}).get("png", ""),
-#                     "coat_of_arms_svg": item.get("coatOfArms", {}).get("svg", ""),
-#                     "gini": item.get("gini", {}),
-#                     "start_of_week": item.get("startOfWeek", ""),
-#                     "car_signs": item.get("car", {}).get("signs", []),
-#                     "car_side": item.get("car", {}).get("side", ""),
-#                     "capital_latlng": item.get("capitalInfo", {}).get("latlng", []),
-#                     "postal_code": item.get("postalCode", {}),
-#                     "timezones": item.get("timezones", []),
-#                     "continent": item.get("continents", [""])[0] if item.get("continents") else "",
-#                     "maps_google": item.get("maps", {}).get("googleMaps", ""),
-#                     "maps_osm": item.get("maps", {}).get("openStreetMaps", ""),
-#                     "translations": item.get("translations", {}),
-#                     "demonyms": item.get("demonyms", {}),
-#                 }
-#             )
-
-#             # Handle currencies (ManyToMany)
-#             currency_data = item.get("currencies", {})
-#             country.currencies.clear()
-#             for code, info in currency_data.items():
-#                 currency, _ = Currency.objects.get_or_create(
-#                     code=code,
-#                     defaults={"name": info.get("name", ""), "symbol": info.get("symbol", "")}
-#                 )
-#                 country.currencies.add(currency)
-
-#             # Handle languages (ManyToMany)
-#             language_data = item.get("languages", {})
-#             country.languages.clear()
-#             for code, name in language_data.items():
-#                 language, _ = Language.objects.get_or_create(code=code, defaults={"name": name})
-#                 country.languages.add(language)
-
-#         self.stdout.write(self.style.SUCCESS("Successfully fetched and saved all country data."))
+            self.stdout.write(self.style.SUCCESS(f"Created: {common_name}"))
