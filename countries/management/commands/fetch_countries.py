@@ -1,7 +1,7 @@
 import json
 import requests
 from django.core.management.base import BaseCommand
-from countries.models import Country, Currency, Language, RegionalBloc
+from countries.models import Country, Currency, Language
 
 class Command(BaseCommand):
     """
@@ -110,15 +110,6 @@ class Command(BaseCommand):
                     },
                 )
                 country_obj.currencies.add(currency_obj)
-
-            # Handle Regional Blocs (optional/rare)
-            country_obj.regional_blocs.clear()
-            for bloc in item.get("regionalBlocs", []):
-                bloc_obj, _ = RegionalBloc.objects.get_or_create(
-                    acronym=bloc.get("acronym"),
-                    defaults={"name": bloc.get("name")}
-                )
-                country_obj.regional_blocs.add(bloc_obj)
 
             # Handle Borders
             country_obj.borders.clear()
