@@ -64,10 +64,19 @@ python manage.py createsuperuser
 python manage.py fetch_countries
 ```
 
+## Run the following 
+
+```bash
+python manage.py collectstatic
+
+```
+
 ## API doc
 ```bash
 python manage.py runserver
 ```
 [Swagger](http://localhost:8000/swagger/)
-[redoc](http://localhost:8000/redoc/)
+
+## NOTE: To get into the Swagger documentation page, you have to be logged in using either django admin panel or default login page.
+
 
